@@ -10,14 +10,16 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 app = Flask(__name__)
 
 # Local MySQL Database Configuration
-username = "root"         # Adjust as needed
-password = ""     # Adjust as needed
-host = "localhost"
-database_name = "employeadmin"
-# Using PyMySQL as the driver
-connection_string = f"mysql+pymysql://{username}:{password}@{host}/{database_name}"
-app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
+# username = "root"
+# password = "" 
+# host = "localhost"
+# database_name = "employeadmin"
+# connection_string = f"mysql+pymysql://{username}:{password}@{host}/{database_name}"
+# app.config['SQLALCHEMY_DATABASE_URI'] = connection_string
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///test.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db = SQLAlchemy(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
